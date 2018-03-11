@@ -8,8 +8,12 @@ public class playercontrol : MonoBehaviour {
 	public float jump;
 	public Rigidbody2D pl;
 
+	public float time;
+	public gameDat gameData;
+
 	// Use this for initialization
 	void Start () {
+		gameData = ((GameObject)Resources.Load("gameDat")).GetComponent<gameDat>();
 		pl = GetComponent<Rigidbody2D> ();
 	}
 	
@@ -30,8 +34,12 @@ public class playercontrol : MonoBehaviour {
 
 		//detections
 		if (pl.IsTouchingLayers(LayerMask.GetMask("killers"))) {
+			gameData.deaths += 1;
 			SceneManager.LoadScene("SimplePlat");
 		}
 
+		//time
+		time += Time.deltaTime;
+		gameData.time = time;
 	}
 }
